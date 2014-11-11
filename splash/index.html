@@ -52,6 +52,13 @@
     
     <script>
 
+      $(document).on({
+        mousemove: resizeCanvas(),
+      });
+
+      $(window).on({
+        load: resizeCanvas()
+      });
 
       var mouseX  = 0;
       var mouseY  = 0;
