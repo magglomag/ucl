@@ -1,0 +1,202 @@
+<html>
+  
+  
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      
+    <title>Urban Complexity Lab &middot; Coming Soon</title>
+      
+    <meta name="description" content="Urban Complexity Lab at University of Applied Sciences Potsdam supported by here">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+      
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    
+  </head>
+  
+  
+  <body>
+
+    
+    <div id="container">
+      
+      <div id="logo" class="fading-primary">
+        
+        <canvas id="canvas"></canvas>
+        <img src="img/urbancomplexitylab.svg" />
+        
+      </div><!-- #logo -->
+          
+      <div id="canvas-helper"></div>
+
+    </div><!-- #container -->
+      
+    
+    <a href="http://fh-potsdam.de" title="University of Applied Sciences Potsdam" class="fading-secondary" target="_blank"><img src="img/logo-fhp.svg" class="logos logo-fhp" /></a>
+    <a href="http://here.com" title="here" class="fading-secondary" target="_blank"><img src="img/logo-here.svg" class="logos logo-here" /></a>    
+
+        
+    <div id="info" class="fading-secondary">
+      <p class="info-lab">
+        Opening soon at<br />
+        <span><a href="http://fh-potsdam.de" title="University of Applied Sciences Potsdam" target="_blank">University of Applied Sciences Potsdam</a><br class="hidden-small" />
+        supported by <a href="http://here.com" title="here" target="_blank">here</a><br /></span>
+      </p>
+    </div>
+        
+
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/gyro.js"></script>
+  
+    
+    <script>
+
+
+      var mouseX  = 0;
+      var mouseY  = 0;
+      var stepsY  = 0;
+      var stepsX  = 0;
+      var pageY = 0;
+      var pageX = 0;
+      var r = 0;
+      var g = 0;
+
+      function resizeCanvas() {
+        
+        if (('ontouchstart' in window) || ('onmsgesturechange' in window)) {
+          gyro.startTracking(function(o) {
+            y = Math.min(Math.max(o.beta,  20), 40); // Gradzahlen – Min:  20°, Max: 40°
+            x = Math.min(Math.max(o.gamma,  0), 40); // Gradzahlen – Min: -20°, Max: 20°
+          })
+        }
+        
+        else {  
+          $(document).mousemove(function(e) { 
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+          })
+        }
+        
+      }
+      
+      
+      var loop = setInterval(function() {
+        
+        console.log(mouseX);
+      
+        var canvas = document.getElementById('canvas');
+        
+        if (canvas.getContext) {
+           
+          logo_width = 1.6 * $('#canvas-helper').height();
+          $("#logo").css("width", logo_width);
+
+          canvas_width = .6*$('#canvas-helper').height();
+          canvas_height = $('#canvas-helper').height();
+          canvas_height_2x = $('#canvas-helper').height() * 2;
+          canvas_width_2x = canvas_width * 2;
+           
+          step_starting_y = canvas_height * .8333;
+          step_y_range = canvas_height * .666;
+          step_x_range = canvas_height * .3;
+             
+          if (('ontouchstart' in window) || ('onmsgesturechange' in window)) {
+            stepsY = ( stepsY + ( ( y  * (canvas_height*.033)  -    (.5*canvas_height) ) - stepsY) / 10 ); 
+            stepsX = ( stepsX + ( ( -x * (canvas_height*.0075) + (.8333*canvas_height) ) - stepsX) / 10 ); 
+        
+          }
+          else {
+            stepsY += ( ( step_starting_y + parseInt(-mouseY / ($(document).height() / step_y_range ) )) - stepsY ) / 10;
+            stepsX += ( ( step_starting_y + parseInt(-mouseX / ($(document).width() / step_x_range ) )) - stepsX ) / 10;
+          }
+    
+          var height_r = $(document).height()/41;
+          var height_g = $(document).height()/255;
+          var height_b = $(document).height()/0;
+          
+          var ctx = canvas.getContext('2d');
+        
+          /* Define canvas dimensions */
+          if ( window.devicePixelRatio >= 2 ) {
+            canvas.width = canvas_width_2x;
+            canvas.height = canvas_height_2x;
+            canvas.style.width = canvas_width;
+            canvas.style.height = canvas_height;
+            ctx.scale(2,2);
+          } else {
+            canvas.width = canvas_width;
+            canvas.height = canvas_height;
+            canvas.style.width = canvas_width;
+            canvas.style.height = canvas_height;
+          }
+              
+          ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  
+  
+          triangle1_x1a = canvas_height * .00666;
+          triangle1_x1a_min = canvas_height * .1666;
+          triangle1_x1a_max = canvas_height * .83333;
+  
+          triangle1_x1b = canvas_height * .6;
+          triangle1_x1b_min = canvas_height * .333;
+          triangle1_x1b_max = canvas_height * .8333;
+  
+          triangle1_x1c = canvas_height * .333;
+          triangle1_y1c = canvas_height * 1;
+          
+  
+          triangle2_x1a_min = canvas_height * .1666;
+          triangle2_x1a_max = canvas_height * .83333;          
+  
+          triangle2_x1b = canvas_height * .333;
+  
+          triangle2_x1c = canvas_height * .333;
+          triangle2_y1c = canvas_height * 1;
+          
+                    
+          /* Gradients */
+          var min = Math.min(stepsY, stepsX);
+          var gradient_1 = ctx.createLinearGradient(0, triangle1_y1c, 0, min);
+          gradient_1.addColorStop(0, "rgb(10, 255, 150)");
+          gradient_1.addColorStop(1, "rgb(50, 0, 150)");
+          var gradient_2 = ctx.createLinearGradient(0, 0, 0, triangle2_y1c);
+          gradient_2.addColorStop(0, "rgb(50, 0, 150)");
+          gradient_2.addColorStop(1, "rgb(10, 255, 150)");  
+  
+            
+          /* Right triangle */
+          ctx.beginPath();
+          ctx.moveTo(triangle1_x1a,Math.min(Math.max(stepsY, triangle1_x1a_min), triangle1_x1a_max));
+          ctx.lineTo(triangle1_x1b,Math.min(Math.max(stepsX, triangle1_x1b_min), triangle1_x1b_max));
+          ctx.lineTo(triangle1_x1c,triangle1_y1c);
+          ctx.fillStyle = gradient_1; 
+          ctx.fill();  
+        
+        
+          /* Left triangle */    
+          ctx.beginPath();
+          ctx.moveTo(0,Math.min(Math.max(stepsY, triangle2_x1a_min), triangle2_x1a_max));
+          ctx.lineTo(triangle2_x1b,0);
+          ctx.lineTo(triangle2_x1c,triangle2_y1c);
+          ctx.fillStyle = gradient_2; 
+          ctx.fill();
+      
+        }    
+      
+        r += Math.round((10 + parseInt(mouseY / height_r) - r) / 4);
+        g += Math.round(((parseInt( ($(document).height()-mouseY) / height_g) - g)) / 4);
+        
+        var pageY = [ Math.min(Math.max(r, 10), 50) , Math.min(Math.max(g, 0), 255), 150 ];
+      
+        $("body").css("background", "rgb(" + pageY + ")");
+         
+      }, 15);      
+            
+    </script>
+    
+    
+  </body>
+  
+  
+</html>
