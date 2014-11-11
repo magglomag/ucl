@@ -61,7 +61,7 @@
       });
 
       var mouseX  = 0;
-      var mouseY  = 0;
+      var mouseY  = parseInt( ($(document).height()/2));
       var stepsY  = 0;
       var stepsX  = 0;
       var pageY = 0;
@@ -90,8 +90,6 @@
       
       var loop = setInterval(function() {
         
-        console.log(mouseX);
-      
         var canvas = document.getElementById('canvas');
         
         if (canvas.getContext) {
@@ -195,10 +193,10 @@
         g += Math.round(((parseInt( ($(document).height()-mouseY) / height_g) - g)) / 4);
         
         var pageY = [ Math.min(Math.max(r, 10), 50) , Math.min(Math.max(g, 0), 255), 150 ];
-      
+      	
         $("body").css("background", "rgb(" + pageY + ")");
          
-      }, 15);      
+      }, 50);  // etwas seltener
             
     </script>
     
