@@ -52,16 +52,23 @@
     
     <script>
 
+
       $(document).on({
         mousemove: resizeCanvas(),
       });
+
 
       $(window).on({
         load: resizeCanvas()
       });
 
+
       var mouseX  = 0;
+<<<<<<< HEAD
+      var mouseY  = parseInt( ($(document).height()/4) );
+=======
       var mouseY  = parseInt( ($(document).height()/2));
+>>>>>>> FETCH_HEAD
       var stepsY  = 0;
       var stepsX  = 0;
       var pageY = 0;
@@ -70,23 +77,34 @@
       var g = 0;
 
       function resizeCanvas() {
-        
         if (('ontouchstart' in window) || ('onmsgesturechange' in window)) {
           gyro.startTracking(function(o) {
-            y = Math.min(Math.max(o.beta,  20), 40); // Gradzahlen – Min:  20°, Max: 40°
-            x = Math.min(Math.max(o.gamma,  0), 40); // Gradzahlen – Min: -20°, Max: 20°
+            y = Math.min(Math.max(o.beta,  20), 40); // Gradzahlen – Min: 20°, Max: 40°
+            x = Math.min(Math.max(o.gamma,  0), 40); // Gradzahlen – Min:  0°, Max: 40°
           })
         }
         
         else {  
-          $(document).mousemove(function(e) { 
-            mouseX = e.pageX;
-            mouseY = e.pageY;
+          $(document).on({
+            mousemove: function(e) { 
+              mouseX = e.pageX;
+              mouseY = e.pageY;
+          }
           })
         }
         
       }
       
+<<<<<<< HEAD
+   
+          setInterval(function() {
+            var canvas = document.getElementById('canvas');
+            
+            if (canvas.getContext) {
+               
+              logo_width = 1.6 * $('#canvas-helper').height();
+              $("#logo").css("width", logo_width);
+=======
       
       var loop = setInterval(function() {
         
@@ -119,57 +137,135 @@
           var height_r = $(document).height()/41;
           var height_g = $(document).height()/255;
           var height_b = $(document).height()/0;
+>>>>>>> FETCH_HEAD
           
-          var ctx = canvas.getContext('2d');
-        
-          /* Define canvas dimensions */
-          if ( window.devicePixelRatio >= 2 ) {
-            canvas.width = canvas_width_2x;
-            canvas.height = canvas_height_2x;
-            canvas.style.width = canvas_width;
-            canvas.style.height = canvas_height;
-            ctx.scale(2,2);
-          } else {
-            canvas.width = canvas_width;
-            canvas.height = canvas_height;
-            canvas.style.width = canvas_width;
-            canvas.style.height = canvas_height;
-          }
-              
-          ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-  
-  
-          triangle1_x1a = canvas_height * .00666;
-          triangle1_x1a_min = canvas_height * .1666;
-          triangle1_x1a_max = canvas_height * .83333;
-  
-          triangle1_x1b = canvas_height * .6;
-          triangle1_x1b_min = canvas_height * .333;
-          triangle1_x1b_max = canvas_height * .8333;
-  
-          triangle1_x1c = canvas_height * .333;
-          triangle1_y1c = canvas_height * 1;
-          
-  
-          triangle2_x1a_min = canvas_height * .1666;
-          triangle2_x1a_max = canvas_height * .83333;          
-  
-          triangle2_x1b = canvas_height * .333;
-  
-          triangle2_x1c = canvas_height * .333;
-          triangle2_y1c = canvas_height * 1;
-          
-                    
-          /* Gradients */
-          var min = Math.min(stepsY, stepsX);
-          var gradient_1 = ctx.createLinearGradient(0, triangle1_y1c, 0, min);
-          gradient_1.addColorStop(0, "rgb(10, 255, 150)");
-          gradient_1.addColorStop(1, "rgb(50, 0, 150)");
-          var gradient_2 = ctx.createLinearGradient(0, 0, 0, triangle2_y1c);
-          gradient_2.addColorStop(0, "rgb(50, 0, 150)");
-          gradient_2.addColorStop(1, "rgb(10, 255, 150)");  
-  
+              canvas_width = .6*$('#canvas-helper').height();
+              canvas_height = $('#canvas-helper').height();
+              canvas_height_2x = $('#canvas-helper').height() * 2;
+              canvas_width_2x = canvas_width * 2;
+               
+              step_starting_y = canvas_height * .8333;
+              step_y_range = canvas_height * .666;
+              step_x_range = canvas_height * .3;
+                 
+              if (('ontouchstart' in window) || ('onmsgesturechange' in window)) {
+                stepsY = ( stepsY + ( ( y  * (canvas_height*.033)  -    (.5*canvas_height) ) - stepsY) / 10 ); 
+                stepsX = ( stepsX + ( ( -x * (canvas_height*.0075) + (.8333*canvas_height) ) - stepsX) / 10 ); 
             
+              }
+              else {
+                stepsY += ( ( step_starting_y + parseInt(-mouseY / ($(document).height() / step_y_range ) )) - stepsY ) / 10;
+                stepsX += ( ( step_starting_y + parseInt(-mouseX / ($(document).width() / step_x_range ) )) - stepsX ) / 10;
+              }
+                  console.log(stepsY);
+          
+              var height_r = $(document).height()/41;
+              var height_g = $(document).height()/255;
+              var height_b = $(document).height()/0;
+              
+              var ctx = canvas.getContext('2d');
+            
+              /* Define canvas dimensions */
+              if ( window.devicePixelRatio >= 2 ) {
+                canvas.width = canvas_width_2x;
+                canvas.height = canvas_height_2x;
+                canvas.style.width = canvas_width;
+                canvas.style.height = canvas_height;
+                ctx.scale(2,2);
+              } else {
+                canvas.width = canvas_width;
+                canvas.height = canvas_height;
+                canvas.style.width = canvas_width;
+                canvas.style.height = canvas_height;
+              }
+                  
+              ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+          
+              
+              /* Triangle 1 */
+              
+              /* x1a | y1a */
+            	triangle1_x1a = canvas_height * .6;
+            	triangle1_y1a_min = canvas_height * .333;
+            	triangle1_y1a_max = canvas_height * .8333;
+            	triangle1_y1a = Math.min(Math.max(stepsX, triangle1_y1a_min), triangle1_y1a_max)
+          
+              /* x1b | y1b */
+            	triangle1_x1b = canvas_height * .333;
+            	triangle1_y1b = canvas_height * 1;
+               					
+              /* x1c | y1c */
+            	triangle1_x1c = 0;
+            	triangle1_y1c_min = canvas_height * .1666;
+            	triangle1_y1c_max = canvas_height * .83333;
+            	triangle1_y1c = Math.min(Math.max(stepsY, triangle1_y1c_min), triangle1_y1c_max);
+          
+              /* Slope */
+              triangle1_m = (triangle1_y1c - triangle1_y1a) / (triangle1_x1c - triangle1_x1a);
+          
+              /* y-intersect */
+              triangle1_n = - ( (triangle1_m * triangle1_x1a) - triangle1_y1a );
+          
+          
+              /* Triangle 2 */
+              
+              /* x1a | y1a */
+            	triangle2_x1a = canvas_height * .333;
+              triangle2_y1a = 0;
+          
+              /* x1b | y1b */          
+              triangle2_x1b = canvas_height * .333;
+              triangle2_y1b = canvas_height * 1;
+            
+<<<<<<< HEAD
+              /* x1c | y1c */
+            	triangle2_x1c = 0;
+            	triangle2_y1c_min = canvas_height * .1666;
+            	triangle2_y1c_max = canvas_height * .83333;	
+            	triangle2_y1c = Math.min(Math.max(stepsY, triangle2_y1c_min), triangle2_y1c_max);
+          
+              /* Intersection */
+          
+              intersection_x = triangle2_x1a;
+              intersection_y = triangle1_m * intersection_x + triangle1_n;
+          
+            	ctx.beginPath();
+            	ctx.moveTo(triangle2_x1a, triangle2_y1a);
+            	ctx.lineTo(intersection_x, intersection_y);
+            	ctx.lineTo(triangle2_x1c, triangle2_y1c);
+            	ctx.lineTo(triangle2_x1a, triangle2_y1a);
+              ctx.fillStyle = "rgb(10,255,150)";
+              ctx.fill();		
+            	
+            	ctx.beginPath();
+            	ctx.moveTo(intersection_x, intersection_y);
+            	ctx.lineTo(triangle1_x1b, triangle1_y1b);
+            	ctx.lineTo(triangle1_x1c, triangle1_y1c);
+            	ctx.lineTo(intersection_x, intersection_y);
+              ctx.fillStyle = "rgb(30,127,150)";
+              ctx.fill();		
+          
+            	ctx.beginPath();
+            	ctx.moveTo(triangle1_x1a, triangle1_y1a);
+            	ctx.lineTo(triangle1_x1b, triangle1_y1b);
+            	ctx.lineTo(intersection_x, intersection_y);
+            	ctx.lineTo(triangle1_x1a, triangle1_y1a);
+              ctx.fillStyle = "rgb(50,0,150)";
+              ctx.fill();			
+          
+            }    
+          
+          
+            r += Math.round((10 + parseInt(mouseY / height_r) - r) / 4);
+            g += Math.round(((parseInt( ($(document).height()-mouseY) / height_g) - g)) / 4);
+            
+            var pageY = [ Math.min(Math.max(r, 13), 44) , Math.min(Math.max(g, 45), 242), 150 ];
+          
+            $("body").css("background", "rgb(" + pageY + ")");
+             
+          }, 30)
+
+=======
           /* Right triangle */
           ctx.beginPath();
           ctx.moveTo(triangle1_x1a,Math.min(Math.max(stepsY, triangle1_x1a_min), triangle1_x1a_max));
@@ -197,6 +293,7 @@
         $("body").css("background", "rgb(" + pageY + ")");
          
       }, 50);  // etwas seltener
+>>>>>>> FETCH_HEAD
             
     </script>
     
