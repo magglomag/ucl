@@ -64,11 +64,7 @@
 
 
       var mouseX  = 0;
-<<<<<<< HEAD
       var mouseY  = parseInt( ($(document).height()/4) );
-=======
-      var mouseY  = parseInt( ($(document).height()/2));
->>>>>>> FETCH_HEAD
       var stepsY  = 0;
       var stepsX  = 0;
       var pageY = 0;
@@ -95,7 +91,6 @@
         
       }
       
-<<<<<<< HEAD
    
           setInterval(function() {
             var canvas = document.getElementById('canvas');
@@ -104,40 +99,6 @@
                
               logo_width = 1.6 * $('#canvas-helper').height();
               $("#logo").css("width", logo_width);
-=======
-      
-      var loop = setInterval(function() {
-        
-        var canvas = document.getElementById('canvas');
-        
-        if (canvas.getContext) {
-           
-          logo_width = 1.6 * $('#canvas-helper').height();
-          $("#logo").css("width", logo_width);
-
-          canvas_width = .6*$('#canvas-helper').height();
-          canvas_height = $('#canvas-helper').height();
-          canvas_height_2x = $('#canvas-helper').height() * 2;
-          canvas_width_2x = canvas_width * 2;
-           
-          step_starting_y = canvas_height * .8333;
-          step_y_range = canvas_height * .666;
-          step_x_range = canvas_height * .3;
-             
-          if (('ontouchstart' in window) || ('onmsgesturechange' in window)) {
-            stepsY = ( stepsY + ( ( y  * (canvas_height*.033)  -    (.5*canvas_height) ) - stepsY) / 10 ); 
-            stepsX = ( stepsX + ( ( -x * (canvas_height*.0075) + (.8333*canvas_height) ) - stepsX) / 10 ); 
-        
-          }
-          else {
-            stepsY += ( ( step_starting_y + parseInt(-mouseY / ($(document).height() / step_y_range ) )) - stepsY ) / 10;
-            stepsX += ( ( step_starting_y + parseInt(-mouseX / ($(document).width() / step_x_range ) )) - stepsX ) / 10;
-          }
-    
-          var height_r = $(document).height()/41;
-          var height_g = $(document).height()/255;
-          var height_b = $(document).height()/0;
->>>>>>> FETCH_HEAD
           
               canvas_width = .6*$('#canvas-helper').height();
               canvas_height = $('#canvas-helper').height();
@@ -217,7 +178,6 @@
               triangle2_x1b = canvas_height * .333;
               triangle2_y1b = canvas_height * 1;
             
-<<<<<<< HEAD
               /* x1c | y1c */
             	triangle2_x1c = 0;
             	triangle2_y1c_min = canvas_height * .1666;
@@ -265,35 +225,6 @@
              
           }, 30)
 
-=======
-          /* Right triangle */
-          ctx.beginPath();
-          ctx.moveTo(triangle1_x1a,Math.min(Math.max(stepsY, triangle1_x1a_min), triangle1_x1a_max));
-          ctx.lineTo(triangle1_x1b,Math.min(Math.max(stepsX, triangle1_x1b_min), triangle1_x1b_max));
-          ctx.lineTo(triangle1_x1c,triangle1_y1c);
-          ctx.fillStyle = gradient_1; 
-          ctx.fill();  
-        
-        
-          /* Left triangle */    
-          ctx.beginPath();
-          ctx.moveTo(0,Math.min(Math.max(stepsY, triangle2_x1a_min), triangle2_x1a_max));
-          ctx.lineTo(triangle2_x1b,0);
-          ctx.lineTo(triangle2_x1c,triangle2_y1c);
-          ctx.fillStyle = gradient_2; 
-          ctx.fill();
-      
-        }    
-      
-        r += Math.round((10 + parseInt(mouseY / height_r) - r) / 4);
-        g += Math.round(((parseInt( ($(document).height()-mouseY) / height_g) - g)) / 4);
-        
-        var pageY = [ Math.min(Math.max(r, 10), 50) , Math.min(Math.max(g, 0), 255), 150 ];
-      	
-        $("body").css("background", "rgb(" + pageY + ")");
-         
-      }, 50);  // etwas seltener
->>>>>>> FETCH_HEAD
             
     </script>
     
