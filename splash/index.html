@@ -146,20 +146,20 @@
               /* Triangle 1 */
               
               /* x1a | y1a */
-            	triangle1_x1a = canvas_height * .6;
-            	triangle1_y1a_min = canvas_height * .333;
-            	triangle1_y1a_max = canvas_height * .8333;
-            	triangle1_y1a = Math.min(Math.max(stepsX, triangle1_y1a_min), triangle1_y1a_max)
+              triangle1_x1a = canvas_height * .6;
+              triangle1_y1a_min = canvas_height * .333;
+              triangle1_y1a_max = canvas_height * .8333;
+              triangle1_y1a = Math.min(Math.max(stepsX, triangle1_y1a_min), triangle1_y1a_max)
           
               /* x1b | y1b */
-            	triangle1_x1b = canvas_height * .333;
-            	triangle1_y1b = canvas_height * 1;
-               					
+              triangle1_x1b = canvas_height * .333;
+              triangle1_y1b = canvas_height * 1;
+                         
               /* x1c | y1c */
-            	triangle1_x1c = 0;
-            	triangle1_y1c_min = canvas_height * .1666;
-            	triangle1_y1c_max = canvas_height * .83333;
-            	triangle1_y1c = Math.min(Math.max(stepsY, triangle1_y1c_min), triangle1_y1c_max);
+              triangle1_x1c = 0;
+              triangle1_y1c_min = canvas_height * .1666;
+              triangle1_y1c_max = canvas_height * .83333;
+              triangle1_y1c = Math.min(Math.max(stepsY, triangle1_y1c_min), triangle1_y1c_max);
           
               /* Slope */
               triangle1_m = (triangle1_y1c - triangle1_y1a) / (triangle1_x1c - triangle1_x1a);
@@ -171,7 +171,7 @@
               /* Triangle 2 */
               
               /* x1a | y1a */
-            	triangle2_x1a = canvas_height * .333;
+              triangle2_x1a = canvas_height * .333;
               triangle2_y1a = 0;
           
               /* x1b | y1b */          
@@ -179,39 +179,39 @@
               triangle2_y1b = canvas_height * 1;
             
               /* x1c | y1c */
-            	triangle2_x1c = 0;
-            	triangle2_y1c_min = canvas_height * .1666;
-            	triangle2_y1c_max = canvas_height * .83333;	
-            	triangle2_y1c = Math.min(Math.max(stepsY, triangle2_y1c_min), triangle2_y1c_max);
+              triangle2_x1c = 0;
+              triangle2_y1c_min = canvas_height * .1666;
+              triangle2_y1c_max = canvas_height * .83333;  
+              triangle2_y1c = Math.min(Math.max(stepsY, triangle2_y1c_min), triangle2_y1c_max);
           
               /* Intersection */
           
               intersection_x = triangle2_x1a;
               intersection_y = triangle1_m * intersection_x + triangle1_n;
           
-            	ctx.beginPath();
-            	ctx.moveTo(triangle2_x1a, triangle2_y1a);
-            	ctx.lineTo(intersection_x, intersection_y);
-            	ctx.lineTo(triangle2_x1c, triangle2_y1c);
-            	ctx.lineTo(triangle2_x1a, triangle2_y1a);
+              ctx.beginPath();
+              ctx.moveTo(triangle2_x1a, triangle2_y1a);
+              ctx.lineTo(intersection_x, intersection_y);
+              ctx.lineTo(triangle2_x1c, triangle2_y1c);
+              ctx.lineTo(triangle2_x1a, triangle2_y1a);
               ctx.fillStyle = "rgb(10,255,150)";
-              ctx.fill();		
-            	
-            	ctx.beginPath();
-            	ctx.moveTo(intersection_x, intersection_y);
-            	ctx.lineTo(triangle1_x1b, triangle1_y1b);
-            	ctx.lineTo(triangle1_x1c, triangle1_y1c);
-            	ctx.lineTo(intersection_x, intersection_y);
+              ctx.fill();    
+              
+              ctx.beginPath();
+              ctx.moveTo(intersection_x, intersection_y);
+              ctx.lineTo(triangle1_x1b, triangle1_y1b);
+              ctx.lineTo(triangle1_x1c, triangle1_y1c);
+              ctx.lineTo(intersection_x, intersection_y);
               ctx.fillStyle = "rgb(30,127,150)";
-              ctx.fill();		
+              ctx.fill();    
           
-            	ctx.beginPath();
-            	ctx.moveTo(triangle1_x1a, triangle1_y1a);
-            	ctx.lineTo(triangle1_x1b, triangle1_y1b);
-            	ctx.lineTo(intersection_x, intersection_y);
-            	ctx.lineTo(triangle1_x1a, triangle1_y1a);
+              ctx.beginPath();
+              ctx.moveTo(triangle1_x1a, triangle1_y1a);
+              ctx.lineTo(triangle1_x1b, triangle1_y1b);
+              ctx.lineTo(intersection_x, intersection_y);
+              ctx.lineTo(triangle1_x1a, triangle1_y1a);
               ctx.fillStyle = "rgb(50,0,150)";
-              ctx.fill();			
+              ctx.fill();      
           
             }    
           
